@@ -17,9 +17,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setupRecyclerView()
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.shopList.observe(this) {
-            shopListAdapter.shopList = it
+            shopListAdapter.submitList(it)
         }
     }
 
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 val position = viewHolder.bindingAdapterPosition
                 if (position == RecyclerView.NO_POSITION) return
 
-                val item = shopListAdapter.shopList[position]
+                val item = shopListAdapter.currentList[position]
                 viewModel.deleteShopItem(item)
             }
         }
